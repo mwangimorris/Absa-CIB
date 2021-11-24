@@ -1,0 +1,23 @@
+/* 
+  Localizable.strings
+  CIB_Absa
+
+  Created by Morris Mwangi on 24/11/2021.
+  
+*/
+
+// MARK: - Rooted Device Error Messsages
+"rooted_device_error_title" = "Rooted Device Detected";
+"rooted_device_error_message" = "We are sorry but due to security concerns, this application cannot be used on rooted devices";
+
+// MARK: - Location Not Authorized Error Messsages
+"location_authorized_error_title" = "Location Error";
+"location_authorized_error_message" = "Application is not authorized to access your current location. You can grant access to your current location in the Settings application.";
+
+// MARK: - Location Request Error Messsages
+"location_request_error_title" = "Location Error";
+"location_request_error_message" = "Application is not able to fetch your current location due to a technical hitch.";
+
+// MARK: - Location Data Error Messsages
+"location_data_error_title" = "Error";
+"location_data_error_message" = "Application is unable to fetch weather data. Please make sure your device is connected over Wi-Fi or Mobile Data.";
