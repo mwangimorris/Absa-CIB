@@ -114,7 +114,7 @@ class WeeklyTableCell: UITableViewCell {
     }
 
     /// Set details on cell
-    /// - Parameter model: NasaImageItems to be displayed
+    /// - Parameter model: WeatherDataItems to be displayed
     public func configureCell(with model: DailyWeatherResponse) {
         dayLabel.text = model.dt_txt.dayofWeek()
         descriptionLabel.text = model.weather.first?.description

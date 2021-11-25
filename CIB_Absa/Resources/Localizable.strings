@@ -7,8 +7,8 @@
 */
 
 // MARK: - Rooted Device Error Messsages
-"rooted_device_error_title" = "Rooted Device Detected";
-"rooted_device_error_message" = "We are sorry but due to security concerns, this application cannot be used on rooted devices";
+"rooted_device_error_title" = "Rooted Device/Simulator Detected";
+"rooted_device_error_message" = "We are sorry but due to security concerns, this application cannot be used on rooted devices or a simulator";
 
 // MARK: - Location Not Authorized Error Messsages
 "location_authorized_error_title" = "Location Error";
@@ -20,4 +20,4 @@
 
 // MARK: - Location Data Error Messsages
 "location_data_error_title" = "Error";
-"location_data_error_message" = "Application is unable to fetch weather data. Please make sure your device is connected over Wi-Fi or Mobile Data.";
+"location_data_error_message" = "Application is unable to fetch weather data. Please make sure your device is connected over Wi-Fi or Mobile Data and try again.";

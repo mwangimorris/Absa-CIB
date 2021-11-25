@@ -8,14 +8,14 @@
 import Foundation
 
 // MARK: - Coordinates to be passed to fetch weather data
-struct Coordinates {
-    let latitude: Double
-    let longitude: Double
+struct Coordinates: Decodable {
+    let lat: Double
+    let lon: Double
 }
 
 // MARK: - Simplify coordinate value parameters
 extension Coordinates: CustomStringConvertible {
     var description: String {
-        return "lat=\(latitude)&lon=\(longitude)"
+        return "lat=\(lat)&lon=\(lon)"
     }
 }

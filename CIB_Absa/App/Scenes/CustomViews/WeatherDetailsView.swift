@@ -16,7 +16,22 @@ class WeatherDetailsView: UIView {
         }
     }
 
+    var weatherIconName: MainEnum? {
+        didSet {
+            configureIcon()
+        }
+    }
+
     // MARK: UI Properties
+    lazy var weatherIcon: UIImageView = {
+        let imageView = UIImageView()
+        imageView.tintColor = .systemPink
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+
+        return imageView
+    }()
+
     lazy var contentStackView: UIStackView = {
         let stack = UIStackView()
         stack.alignment = .leading
@@ -58,7 +73,7 @@ class WeatherDetailsView: UIView {
         self.layer.cornerRadius = 20
         self.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
 
-        [closeBtn, contentStackView].forEach { addSubview($0) }
+        [weatherIcon, closeBtn, contentStackView].forEach { addSubview($0) }
     }
 
     private func setupConstraints() {
@@ -66,15 +81,33 @@ class WeatherDetailsView: UIView {
             closeBtn.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
             closeBtn.topAnchor.constraint(equalTo: topAnchor, constant: 10),
 
-            contentStackView.topAnchor.constraint(equalTo: closeBtn.bottomAnchor, constant: 10),
+            weatherIcon.centerXAnchor.constraint(equalTo: centerXAnchor),
+            weatherIcon.topAnchor.constraint(equalTo: topAnchor, constant: 30),
+
+            contentStackView.topAnchor.constraint(equalTo: weatherIcon.bottomAnchor, constant: 10),
             contentStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -30),
             contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10)
         ])
     }
 
+    private func configureIcon() {
+        guard let icon = weatherIconName else { return }
+
+        let largeFont = UIFont.systemFont(ofSize: 40)
+        let configuration = UIImage.SymbolConfiguration(font: largeFont)
+
+        switch icon {
+        case .clear: self.weatherIcon.image = UIImage(systemName: "sun.max.fill", withConfiguration: configuration)
+        case .clouds: self.weatherIcon.image = UIImage(systemName: "cloud.fill", withConfiguration: configuration)
+        case .rain: self.weatherIcon.image = UIImage(systemName: "cloud.drizzle.fill", withConfiguration: configuration)
+        }
+    }
+
     private func configureWeatherDetails() {
         guard let details = weatherDetails else { return }
+
+        contentStackView.safelyRemoveArrangedSubviews()
 
         details.forEach {
             let detailLabel: UILabel = {

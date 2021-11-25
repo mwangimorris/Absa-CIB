@@ -16,14 +16,14 @@ enum NetworkError: Error {
 
 /// Network engine protocol to define networking rules and enable testability
 protocol NetworkEngine {
-    func getRequest<T: Decodable>(for: T.Type,
+    func request<T: Decodable>(for: T.Type,
                                       url: String,
                                       completionHandler completion: @escaping (Result<T?, NetworkError>) -> Void)
 }
 
 class APIClient: NetworkEngine {
 
-    func getRequest<T>(for: T.Type = T.self, url: String, completionHandler completion: @escaping (Result<T?, NetworkError>) -> Void) where T : Decodable {
+    func request<T>(for: T.Type = T.self, url: String, completionHandler completion: @escaping (Result<T?, NetworkError>) -> Void) where T : Decodable {
 
         guard let url = URL(string: url) else { return completion(.failure(.badURL)) }
 
@@ -32,10 +32,10 @@ class APIClient: NetworkEngine {
                 return completion(.failure(.noData))
             }
 
-            let nasaResponse = try? JSONDecoder().decode(T.self, from: data)
+            let weatherResponse = try? JSONDecoder().decode(T.self, from: data)
 
-            if let nasaResponse = nasaResponse {
-                completion(.success(nasaResponse))
+            if let weatherResponse = weatherResponse {
+                completion(.success(weatherResponse))
             } else {
                 completion(.failure(.decodingError))
             }

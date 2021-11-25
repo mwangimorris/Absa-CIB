@@ -9,6 +9,7 @@ import Foundation
 
 // MARK: - Weather Data Models
 struct WeatherResponse : Decodable, Equatable {
+    let coord: Coordinates
     let main: CurrentWeather
     let weather: [Weather]
     let sys: CountryDetails
@@ -31,6 +32,10 @@ struct CountryDetails: Decodable {
     let country: String
 }
 
+struct Wind: Decodable {
+    let speed: Double
+}
+
 struct Weather: Decodable {
     let description: String
     let icon: String
@@ -41,6 +46,8 @@ struct Weather: Decodable {
 struct DailyWeatherResponse: Decodable {
     let main: CurrentWeather
     let weather : [Weather]
+    let wind: Wind
+    let visibility: Int
     let dt_txt: String
 }
 

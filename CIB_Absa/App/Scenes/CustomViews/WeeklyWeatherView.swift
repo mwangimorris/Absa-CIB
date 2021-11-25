@@ -126,17 +126,23 @@ extension WeeklyWeatherView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let dataSource = dataSource else { return }
 
-        guard let condition = dataSource[indexPath.row].weather.first?.description else { return }
+        guard
+            let condition = dataSource[indexPath.row].weather.first?.description,
+            let iconName = dataSource[indexPath.row].weather.first?.main
+        else { return }
 
         let detailsArray = [
+            "Expected Condition: \(condition)",
             "Expected Temperature: \(dataSource[indexPath.row].main.temp.toCelsius())",
             "Expected Max Temperature: \(dataSource[indexPath.row].main.temp_max.toCelsius())",
             "Expected Min Temperature: \(dataSource[indexPath.row].main.temp_min.toCelsius())",
             "Expected Humidity: \(dataSource[indexPath.row].main.humidity)",
-            "Expected Condition: \(condition)"
+            "Expected Wind Speed: \(dataSource[indexPath.row].wind.speed)",
+            "Expected Visibiility: \(dataSource[indexPath.row].visibility)meters"
         ]
 
         detailsBottomSheet.weatherDetails = detailsArray
+        detailsBottomSheet.weatherIconName = iconName
         self.presentBottomSheet(sheet: detailsBottomSheet)
     }
 }

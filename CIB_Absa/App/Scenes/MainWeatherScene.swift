@@ -41,16 +41,18 @@ class MainWeatherScene: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Set view title
-//        self.title = "Absa Weather"
-
         self.setupObservables()
-        self.requestCurrentLocation()
+        self.setupPrechecks()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupViews()
+    }
+
+    fileprivate func setupPrechecks() {
+        guard let viewModel = viewModel else { return }
+        viewModel.isJailBroken ? self.showAlert(of: .deviceIsRooted, isCancellable: false) : self.requestCurrentLocation()
     }
 }
 
@@ -78,7 +80,7 @@ extension MainWeatherScene {
         ])
     }
 
-    private func showAlert(of type: AlertType) {
+    private func showAlert(of type: AlertType, isCancellable: Bool = true) {
         let title, message: String
 
         switch type {
@@ -99,9 +101,11 @@ extension MainWeatherScene {
         // Initialize Alert Controller
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-        // Add Cancel Action
-        let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-        alertController.addAction(cancelAction)
+        if isCancellable {
+            // Add Cancel Action
+            let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alertController.addAction(cancelAction)
+        }
 
         // Present Alert Controller
         DispatchQueue.main.async {
@@ -191,7 +195,7 @@ extension MainWeatherScene {
         else { return }
 
         // Get Coordinates
-        let coordinates = Coordinates(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        let coordinates = Coordinates(lat: location.coordinate.latitude, lon: location.coordinate.longitude)
 
         // Retrieve weather data
         viewModel.getCurrentWeatherData(at: coordinates)
